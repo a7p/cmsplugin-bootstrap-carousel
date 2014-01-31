@@ -45,6 +45,7 @@ class Carousel(CMSPlugin):
     def __unicode__(self):
         return self.domid
 
+
 class CarouselItem(models.Model):
     carousel = models.ForeignKey(Carousel)
     caption_title = models.CharField(max_length=100, blank=True, null=True)
