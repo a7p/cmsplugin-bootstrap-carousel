@@ -1,4 +1,4 @@
-{% load sekizai_tags %}
+{% load sekizai_tags thumbnail %}
 {% addtoblock "css" %}
 <style type="text/css">
     .carousel {
@@ -51,7 +51,7 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
         {% for item in instance.carouselitem_set.all %}
-            <li data-target="#{{ instance.domid }}" data-slide-to="{{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}"></li>
+            <li data-target="#{{ instance.domid }}" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
         {% endfor %}
     </ol>
 
@@ -59,7 +59,12 @@
     <div class="carousel-inner">
         {% for item in instance.carouselitem_set.all %}
         <div class="{% if forloop.first %}active {% endif %}item">
-            <img src="{{ item.image.url }}" alt="">
+            {% if instance.width and instance.height %}
+                <img src="{% thumbnail item.image instance.width_x_height crop upscale subject_location=item.image.subject_location %}" alt="">
+            {% else %}
+                <img src="{% thumbnail item.image 754x550 crop upscale subject_location=item.image.subject_location %}" alt="">
+            {% endif %}
+
             {% if instance.show_caption or instance.show_title %}
             <div class="carousel-caption">
                 {% if instance.show_title %}
