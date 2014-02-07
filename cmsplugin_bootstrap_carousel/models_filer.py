@@ -32,6 +32,9 @@ class Carousel(CMSPlugin):
         help_text="Fixed height in pixels for carousel images.",
         default=0)
 
+    def width_x_height(self):
+        return "{}x{}".format(self.width, self.height)
+
     def copy_relations(self, oldinstance):
         for item in oldinstance.carouselitem_set.all():
             item.pk = None
